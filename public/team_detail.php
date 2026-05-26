@@ -72,7 +72,8 @@ require_once "../includes/header.php";
     <!-- HERO -->
     <section class="team-detail-hero">
 
-        ../<?php echo $team["logo_url"]; ?>"
+        <img
+            src="../<?php echo $team["logo_url"]; ?>"
             alt="<?php echo $team["name"]; ?>"
             class="team-detail-logo"
         >
