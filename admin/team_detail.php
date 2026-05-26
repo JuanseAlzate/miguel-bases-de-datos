@@ -72,7 +72,8 @@ require_once "../includes/admin_header.php";
 
     <div class="team-detail-info">
 
-        ../<?php echo $team["logo_url"]; ?>"
+        <img
+            src="../<?php echo $team["logo_url"]; ?>"
             alt="<?php echo $team["name"]; ?>"
             class="team-detail-logo"
         >
@@ -93,7 +94,8 @@ require_once "../includes/admin_header.php";
 
     <div class="team-detail-actions">
 
-        create_player.php?team_id=<?php echo $team["id"]; ?>"
+        <a
+            href="create_player.php?team_id=<?php echo $team["id"]; ?>"
             class="admin-btn"
         >
             + Agregar jugador
@@ -162,13 +164,15 @@ require_once "../includes/admin_header.php";
 
                         <div class="admin-actions">
 
-                            edit_player.php?id=<?php echo $player["id"]; ?>"
+                            <a
+                                href="edit_player.php?id=<?php echo $player["id"]; ?>"
                                 class="admin-action edit"
                             >
                                 Editar
                             </a>
 
-                            delete_player.php?id=<?php echo $player["id"]; ?>"
+                            <a
+                                href="delete_player.php?id=<?php echo $player["id"]; ?>"
                                 class="admin-action delete"
                                 onclick="return confirm('¿Eliminar jugador?')"
                             >

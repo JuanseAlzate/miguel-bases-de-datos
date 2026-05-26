@@ -279,7 +279,8 @@ require_once "../includes/season_nav.php";
 
                             <td class="stats-team">
 
-                                ../<?php echo $player["logo_url"]; ?>"
+                                <img
+                                    src="../<?php echo $player["logo_url"]; ?>"
                                     class="stats-team-logo"
                                 >
 
@@ -357,7 +358,8 @@ require_once "../includes/season_nav.php";
                     
                             <td class="stats-team">
                     
-                                ../<?php echo $player["logo_url"]; ?>"
+                                <img
+                                    src="../<?php echo $player["logo_url"]; ?>"
                                     class="stats-team-logo"
                                 >
                     
@@ -439,7 +441,8 @@ require_once "../includes/season_nav.php";
 
                             <td class="stats-team">
 
-                                ../<?php echo $player["logo_url"]; ?>"
+                                <img
+                                    src="../<?php echo $player["logo_url"]; ?>"
                                     class="stats-team-logo"
                                 >
 
@@ -517,7 +520,8 @@ require_once "../includes/season_nav.php";
 
                             <td class="stats-team">
 
-                                ../<?php echo $player["logo_url"]; ?>"
+                                <img
+                                    src="../<?php echo $player["logo_url"]; ?>"
                                     class="stats-team-logo"
                                 >
 

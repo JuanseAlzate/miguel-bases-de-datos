@@ -38,14 +38,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             🛡️ Equipos
         </a>
 
-        <!-- PLAYERS -->
-        <a
-            href="../admin/players.php"
-            class="<?php echo $currentPage === 'players.php' ? 'active' : ''; ?>"
-        >
-            👤 Jugadores
-        </a>
-
         <!-- MATCHES -->
         <a
             href="../admin/matches.php"

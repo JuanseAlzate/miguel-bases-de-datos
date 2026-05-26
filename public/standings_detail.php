@@ -153,7 +153,8 @@ require_once "../includes/season_nav.php";
 
                                 <td class="team-column">
 
-                                    ../<?php echo $team["logo_url"]; ?>"
+                                    <img
+                                        src="../<?php echo $team["logo_url"]; ?>"
                                         alt="<?php echo $team["name"]; ?>"
                                         class="team-table-logo"
                                     >
