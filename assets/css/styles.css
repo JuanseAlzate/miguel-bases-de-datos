@@ -1,0 +1,713 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f1f5f9;
+  color: #1e293b;
+}
+
+/* CONTENEDOR */
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* HEADER */
+.site-header {
+  background-color: #020617;
+  color: white;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 10px;
+}
+
+/* BRAND */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-logo {
+  font-size: 26px;
+}
+
+.brand h1 {
+  font-size: 20px;
+}
+
+.brand p {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* NAV */
+.main-nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 15px;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.main-nav .active,
+.main-nav a:hover {
+  color: #38bdf8;
+}
+
+/* HERO */
+.hero {
+  padding: 50px 10px;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 25px;
+}
+
+.hero-text h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.hero-text p {
+  color: #64748b;
+  margin-bottom: 15px;
+}
+
+.badge {
+  display: inline-block;
+  background-color: #0ea5e9;
+  color: white;
+  padding: 4px 10px;
+  font-size: 12px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.hero-actions a {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.hero-actions a:first-child {
+  background-color: #0284c7;
+  color: white;
+}
+
+.hero-actions .secondary-btn {
+  background-color: white;
+  border: 1px solid #cbd5f5;
+  color: #1e293b;
+}
+
+/* CARD PREVIEW PARTIDO */
+.hero-card {
+  background: white;
+  border-radius: 16px;
+  padding: 18px;
+  border: 1px solid #e2e8f0;
+}
+
+.match-preview-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.match-preview-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 15px 0;
+}
+
+.team-preview {
+  text-align: center;
+}
+
+.team-logo {
+  width: 50px;
+  height: 50px;
+  background-color: #f1f5f9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.match-time {
+  text-align: center;
+}
+
+.match-preview-footer {
+  font-size: 13px;
+  color: #64748b;
+  text-align: center;
+}
+
+/* SECCIÓN */
+.section-title {
+  margin-bottom: 20px;
+}
+
+.section-title h2 {
+  font-size: 24px;
+}
+
+.section-title p {
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* CARDS */
+.cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.info-card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  transition: 0.2s;
+}
+
+.info-card:hover {
+  transform: translateY(-3px);
+}
+
+.card-icon {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.info-card h3 {
+  margin-bottom: 5px;
+}
+
+.info-card p {
+  color: #64748b;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.info-card a {
+  text-decoration: none;
+  color: #0284c7;
+  font-weight: bold;
+}
+
+/* ADMIN BOX */
+.admin-callout {
+  margin: 40px 0;
+}
+
+.admin-box {
+  background: #020617;
+  color: white;
+  padding: 25px;
+  border-radius: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-box a {
+  background: #0ea5e9;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* FOOTER */
+.site-footer {
+  background: #020617;
+  color: #94a3b8;
+  padding: 20px 0;
+  text-align: center;
+  font-size: 13px;
+}
+
+/* RESPONSIVE */
+@media (min-width: 768px) {
+  .hero-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .hero-text h2 {
+    font-size: 34px;
+  }
+}
+
+/* ===================================== */
+/* PARTIDOS (matches.php) */
+/* ===================================== */
+
+/* LISTA DE PARTIDOS */
+.matches-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* TARJETA DE PARTIDO */
+.match-card {
+  background: white;
+  border-radius: 14px;
+  padding: 15px;
+  border: 1px solid #e2e8f0;
+  transition: 0.2s;
+}
+
+.match-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* HEADER DEL PARTIDO */
+.match-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 10px;
+  color: #64748b;
+}
+
+/* ESTADO BASE */
+.status {
+  font-weight: bold;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+/* ESTADOS */
+.status-scheduled {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.status-finished {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-live {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* SECCIÓN DE EQUIPOS */
+.match-teams {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* EQUIPO */
+.team {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 35%;
+}
+
+.team:last-child {
+  justify-content: flex-end;
+}
+
+/* LOGO */
+.team-img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 50%;
+  background: #f1f5f9;
+  padding: 4px;
+  border: 1px solid #e2e8f0;
+}
+
+/* MARCADOR */
+.score {
+  width: 30%;
+  text-align: center;
+}
+
+.score strong {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* FOOTER DEL PARTIDO */
+.match-footer {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #64748b;
+  text-align: center;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .team span {
+    display: none;
+  }
+
+  .team-img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .score strong {
+    font-size: 18px;
+  }
+}
+
+/* =============================== */
+/* DETALLE DE PARTIDO */
+/* =============================== */
+
+.match-detail {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.match-detail .teams {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.match-detail .score strong {
+  font-size: 28px;
+}
+
+.match-info {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #64748b;
+}
+
+/* EVENTOS */
+.events {
+  margin-top: 20px;
+}
+
+.events h2 {
+  margin-bottom: 10px;
+}
+
+.events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.event-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.minute {
+  font-weight: bold;
+  width: 40px;
+}
+
+.icon {
+  font-size: 18px;
+}
+
+.event-info p {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.match-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+/* =============================== */
+/* EVENTOS MEJORADOS */
+/* =============================== */
+
+.event-item {
+  display: flex;
+  gap: 15px;
+  background: white;
+  padding: 12px 15px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  align-items: flex-start;
+}
+
+.event-minute {
+  font-weight: bold;
+  min-width: 40px;
+  color: #0f172a;
+}
+
+.event-content {
+  flex: 1;
+}
+
+.event-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.event-icon {
+  font-size: 18px;
+}
+
+.event-player {
+  font-weight: bold;
+}
+
+.event-description {
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 3px;
+}
+
+/* =============================== */
+/* EVENTOS POR EQUIPO */
+/* =============================== */
+
+/* contenedor ya existente */
+.timeline {
+  position: relative;
+  padding: 0 10px;
+}
+
+/* línea central */
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #e2e8f0;
+  transform: translateX(-50%);
+}
+
+/* evento base */
+.event-item {
+  position: relative;
+  width: 50%;
+  padding: 10px;
+}
+
+/* lado izquierdo (LOCAL) */
+.event-home {
+  left: 0;
+  text-align: right;
+}
+
+/* lado derecho (VISITANTE) */
+.event-away {
+  left: 50%;
+}
+
+/* contenido */
+.event-content {
+  display: inline-block;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 10px 12px;
+  max-width: 260px;
+}
+
+/* punto del timeline */
+.event-item::after {
+  content: '';
+  position: absolute;
+  top: 15px;
+  width: 10px;
+  height: 10px;
+  background: #0ea5e9;
+  border-radius: 50%;
+}
+
+/* alineación punto */
+.event-home::after {
+  right: -5px;
+}
+
+.event-away::after {
+  left: -5px;
+}
+
+/* minuto */
+.event-minute {
+  font-weight: bold;
+  margin-bottom: 4px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* responsive */
+@media (max-width: 768px) {
+  .event-item,
+  .event-home,
+  .event-away {
+    width: 100%;
+    left: 0;
+    text-align: left;
+  }
+
+  .timeline-line {
+    left: 10px;
+  }
+
+  .event-item::after {
+    left: -2px;
+  }
+}
+
+/* =============================== */
+/* TEMPORADAS */
+/* =============================== */
+
+.seasons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.season-card {
+  background: white;
+  border-radius: 16px;
+  padding: 25px;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid #e2e8f0;
+  transition: 0.2s;
+}
+
+.season-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.season-icon {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.season-card h3 {
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
+.season-card p {
+  font-size: 14px;
+  color: #64748b;
+}
+
+/* =============================== */
+/* TABLA DE POSICIONES */
+/* =============================== */
+
+.standings-table {
+  margin: 30px 0;
+}
+
+.standings-table h2 {
+  margin-bottom: 10px;
+}
+
+.table-container {
+  overflow-x: auto;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #020617;
+  color: white;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+tbody tr {
+  border-bottom: 1px solid #e2e8f0;
+  transition: 0.2s;
+}
+
+tbody tr:hover {
+  background: #f8fafc;
+}
+
+/* columna equipo */
+.team-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+}
+
+.team-cell img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+/* top posiciones */
+tbody tr:nth-child(1) td {
+  background: #dcfce7;
+  font-weight: bold;
+}
+
+tbody tr:nth-child(2) td,
+tbody tr:nth-child(3) td,
+tbody tr:nth-child(4) td {
+  background: #f0fdf4;
+}
