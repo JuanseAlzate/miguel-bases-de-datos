@@ -1,0 +1,205 @@
+/* ===================================== */
+/* ADMIN LAYOUT */
+/* ===================================== */
+
+.admin-layout {
+  display: flex;
+
+  min-height: 100vh;
+
+  background: #f8fafc;
+}
+
+/* ===================================== */
+/* SIDEBAR */
+/* ===================================== */
+
+.admin-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 260px;
+
+  background: #020617;
+
+  color: white;
+
+  padding: 25px 20px;
+
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+/* BRAND */
+.admin-brand {
+  margin-bottom: 40px;
+}
+
+.admin-brand h2 {
+  margin-bottom: 5px;
+}
+
+.admin-brand p {
+  color: #94a3b8;
+
+  font-size: 14px;
+}
+
+/* ===================================== */
+/* NAVIGATION */
+/* ===================================== */
+
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.admin-nav a {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 12px 14px;
+
+  border-radius: 10px;
+
+  text-decoration: none;
+
+  color: #cbd5e1;
+
+  transition: 0.2s;
+}
+
+.admin-nav a:hover {
+  background: #0f172a;
+
+  color: white;
+}
+
+.admin-nav a.active {
+  background: #0284c7;
+
+  color: white;
+}
+
+/* ===================================== */
+/* MAIN */
+/* ===================================== */
+
+.admin-main {
+  flex: 1;
+  margin-left: 260px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===================================== */
+/* TOPBAR */
+/* ===================================== */
+
+.admin-topbar {
+  background: white;
+
+  padding: 20px 30px;
+
+  border-bottom: 1px solid #e2e8f0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* USER */
+.admin-user {
+  color: #64748b;
+
+  font-size: 14px;
+}
+
+/* ===================================== */
+/* CONTENT */
+/* ===================================== */
+
+.admin-content {
+  padding: 30px;
+}
+
+/* ===================================== */
+/* DASHBOARD GRID */
+/* ===================================== */
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
+  gap: 20px;
+}
+
+/* CARD */
+.dashboard-card {
+  background: white;
+
+  border-radius: 18px;
+
+  padding: 25px;
+
+  border: 1px solid #e2e8f0;
+}
+
+/* ICON */
+.dashboard-card span {
+  display: block;
+
+  font-size: 32px;
+
+  margin-bottom: 12px;
+}
+
+/* TEXT */
+.dashboard-card h3 {
+  margin-bottom: 8px;
+}
+
+.dashboard-card p {
+  color: #64748b;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+/* ===================================== */
+/* RESPONSIVE */
+/* ===================================== */
+
+@media (max-width: 768px) {
+  .admin-layout {
+    flex-direction: column;
+  }
+
+  .admin-sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+
+  .admin-main {
+    margin-left: 0;
+  }
+
+  .admin-topbar {
+    padding: 20px;
+  }
+
+  .admin-content {
+    padding: 20px;
+  }
+}

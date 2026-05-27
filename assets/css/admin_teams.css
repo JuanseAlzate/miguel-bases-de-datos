@@ -1,0 +1,168 @@
+/* ===================================== */
+/* ADMIN PAGE HEADER */
+/* ===================================== */
+
+.admin-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 25px;
+}
+
+.admin-page-header p {
+  color: #64748b;
+
+  margin-top: 5px;
+}
+
+/* ===================================== */
+/* BUTTON */
+/* ===================================== */
+
+.admin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 12px 18px;
+
+  border-radius: 10px;
+
+  background: #0284c7;
+
+  color: white;
+
+  text-decoration: none;
+
+  font-weight: 500;
+
+  transition: 0.2s;
+}
+
+.admin-btn:hover {
+  background: #0369a1;
+}
+
+/* ===================================== */
+/* TABLE */
+/* ===================================== */
+
+.admin-table-wrapper {
+  background: white;
+
+  border-radius: 18px;
+
+  overflow-x: auto;
+
+  border: 1px solid #e2e8f0;
+}
+
+.admin-table {
+  width: 100%;
+
+  border-collapse: collapse;
+}
+
+/* HEAD */
+.admin-table thead {
+  background: #020617;
+
+  color: white;
+}
+
+.admin-table th {
+  padding: 16px;
+
+  text-align: left;
+
+  font-size: 14px;
+}
+
+/* BODY */
+.admin-table td {
+  padding: 16px;
+
+  border-bottom: 1px solid #e2e8f0;
+
+  vertical-align: middle;
+}
+
+/* HOVER */
+.admin-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+/* ===================================== */
+/* TEAM LOGO */
+/* ===================================== */
+
+.admin-team-logo {
+  width: 48px;
+  height: 48px;
+
+  object-fit: contain;
+}
+
+/* ===================================== */
+/* ACTIONS */
+/* ===================================== */
+
+.admin-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* BUTTONS */
+.admin-action {
+  padding: 8px 12px;
+
+  border-radius: 8px;
+
+  text-decoration: none;
+
+  font-size: 13px;
+
+  font-weight: 500;
+
+  transition: 0.2s;
+}
+
+/* EDIT */
+.admin-action.edit {
+  background: #dbeafe;
+
+  color: #1d4ed8;
+}
+
+.admin-action.edit:hover {
+  background: #bfdbfe;
+}
+
+/* DELETE */
+.admin-action.delete {
+  background: #fee2e2;
+
+  color: #b91c1c;
+}
+
+.admin-action.delete:hover {
+  background: #fecaca;
+}
+
+/* ===================================== */
+/* RESPONSIVE */
+/* ===================================== */
+
+@media (max-width: 768px) {
+  .admin-page-header {
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 15px;
+  }
+
+  .admin-actions {
+    flex-direction: column;
+  }
+}
