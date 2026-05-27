@@ -5,109 +5,140 @@ require_once "../config/database.php";
 $db = new Database();
 $conn = $db->connect();
 
-$year = $_GET["year"] ?? null;
+/*
+    CSS
+*/
+$pageStyles = [
+    "standings.css"
+];
 
-if (!$year) {
-    die("Temporada no válida");
+/*
+    Parámetros
+*/
+$year = $_GET["year"] ?? null;
+$tournament = $_GET["tournament"] ?? null;
+
+if (!$year || !$tournament) {
+    die("Temporada o torneo inválido");
 }
 
 /*
-    Obtener standings del año
+    Variables navegación
 */
-$sql = "
-    SELECT s.id, s.tournament
-    FROM standings s
-    WHERE s.year = :year
-";
-
-$stmt = $conn->prepare($sql);
-$stmt->bindParam(":year", $year);
-$stmt->execute();
-
-$standings = $stmt->fetchAll();
 
 /*
-    Obtener equipos por standing
+    Obtener standings
 */
-function getTable($conn, $standingId) {
+$sqlStandings = "
+    SELECT *
+    FROM standings
+    WHERE year = :year
+    AND tournament = :tournament
+";
+
+$stmtStandings = $conn->prepare($sqlStandings);
+
+$stmtStandings->bindParam(":year", $year);
+$stmtStandings->bindParam(":tournament", $tournament);
+
+$stmtStandings->execute();
+
+$standings = $stmtStandings->fetchAll();
+
+/*
+    Obtener tabla
+*/
+function getStandingsTable($conn, $standingId) {
+
     $sql = "
         SELECT 
             st.*,
+
             t.name,
             t.logo_url
+
         FROM standings_teams st
-        INNER JOIN teams t ON st.team_id = t.id
+
+        INNER JOIN teams t
+            ON st.team_id = t.id
+
         WHERE st.standing_id = :id
+
         ORDER BY st.position ASC
     ";
 
     $stmt = $conn->prepare($sql);
+
     $stmt->bindParam(":id", $standingId);
+
     $stmt->execute();
 
     return $stmt->fetchAll();
+
 }
 
+/*
+    Header
+*/
+require_once "../includes/header.php";
+
+/*
+    Navegación temporada
+*/
+require_once "../includes/season_nav.php";
+
 ?>
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Tabla <?php echo $year; ?></title>
-
-    <link rel="stylesheet" href="../assets/css/styles.css">
-</head>
-<body>
-
-<header class="site-header">
-    <div class="container header-content">
-
-        <div class="brand">
-            <div class="brand-logo">🏆</div>
-            <div>
-                <h1>Liga BetPlay</h1>
-                <p>Temporada <?php echo $year; ?></p>
-            </div>
-        </div>
-
-        <nav class="main-nav">
-            <a href="standings.php">← Volver</a>
-        </nav>
-
-    </div>
-</header>
 
 <main class="container">
 
     <section class="section-title">
-        <h2>Tablas de posición</h2>
+
+        <h2>
+            Tabla de posiciones
+        </h2>
+
+        <p>
+            Clasificación oficial de la temporada
+        </p>
+
     </section>
 
     <?php foreach ($standings as $standing): ?>
 
-        <?php $teams = getTable($conn, $standing["id"]); ?>
+        <?php
+            $teams = getStandingsTable($conn, $standing["id"]);
+        ?>
 
-        <section class="standings-table">
+        <section class="standings-section">
 
-            <h2><?php echo $standing["tournament"]; ?></h2>
+            <div class="standings-header">
 
-            <div class="table-container">
+                <h3>
+                    <?php echo $standing["tournament"]; ?>
+                </h3>
 
-                <table>
+            </div>
+
+            <div class="table-wrapper">
+
+                <table class="standings-table">
 
                     <thead>
+
                         <tr>
+
                             <th>#</th>
                             <th>Equipo</th>
-                            <th>Pts</th>
+                            <th>PTS</th>
                             <th>PJ</th>
                             <th>G</th>
                             <th>E</th>
                             <th>P</th>
                             <th>GF</th>
                             <th>GC</th>
+
                         </tr>
+
                     </thead>
 
                     <tbody>
@@ -116,14 +147,29 @@ function getTable($conn, $standingId) {
 
                             <tr>
 
-                                <td><?php echo $team["position"]; ?></td>
-
-                                <td class="team-cell">
-                                    <?php echo "../" . $team["logo_url"]; ?> class="team-img">
-                                    <?php echo $team["name"]; ?>
+                                <td>
+                                    <?php echo $team["position"]; ?>
                                 </td>
 
-                                <td><strong><?php echo $team["points"]; ?></strong></td>
+                                <td class="team-column">
+
+                                    ../<?php echo $team["logo_url"]; ?>"
+                                        alt="<?php echo $team["name"]; ?>"
+                                        class="team-table-logo"
+                                    >
+
+                                    <span>
+                                        <?php echo $team["name"]; ?>
+                                    </span>
+
+                                </td>
+
+                                <td>
+                                    <strong>
+                                        <?php echo $team["points"]; ?>
+                                    </strong>
+                                </td>
+
                                 <td><?php echo $team["played"]; ?></td>
                                 <td><?php echo $team["wins"]; ?></td>
                                 <td><?php echo $team["draws"]; ?></td>
@@ -147,5 +193,4 @@ function getTable($conn, $standingId) {
 
 </main>
 
-</body>
-</html>
+<?php require_once "../includes/footer.php"; ?>

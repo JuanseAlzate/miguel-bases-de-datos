@@ -1,0 +1,107 @@
+/* ===================================== */
+/* STATISTICS */
+/* ===================================== */
+
+.stats-section {
+  margin: 30px 0;
+}
+
+/* HEADER */
+.stats-header {
+  margin-bottom: 15px;
+}
+
+.stats-header h3 {
+  font-size: 22px;
+}
+
+/* WRAPPER */
+.stats-table-wrapper {
+  overflow-x: auto;
+
+  background: white;
+
+  border-radius: 18px;
+
+  border: 1px solid #e2e8f0;
+}
+
+/* TABLE */
+.stats-table {
+  width: 100%;
+
+  border-collapse: collapse;
+}
+
+/* HEAD */
+.stats-table thead {
+  background: #020617;
+
+  color: white;
+}
+
+.stats-table th {
+  padding: 14px;
+
+  font-size: 13px;
+}
+
+/* BODY */
+.stats-table td {
+  padding: 14px;
+
+  text-align: center;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* HOVER */
+.stats-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+/* TEAM */
+.stats-team {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* LOGO */
+.stats-team-logo {
+  width: 30px;
+  height: 30px;
+
+  object-fit: contain;
+
+  border-radius: 50%;
+
+  background: #f8fafc;
+
+  padding: 3px;
+
+  border: 1px solid #e2e8f0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .stats-table th,
+  .stats-table td {
+    font-size: 12px;
+    padding: 10px;
+  }
+}
+
+/* PLAYER LINK */
+.player-link {
+  text-decoration: none;
+  color: #0f172a;
+
+  font-weight: 500;
+
+  transition: 0.2s;
+}
+
+.player-link:hover {
+  color: #0284c7;
+}

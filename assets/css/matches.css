@@ -1,0 +1,145 @@
+/* ===================================== */
+/* MATCHES */
+/* ===================================== */
+
+.matches-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  margin: 30px 0;
+}
+
+/* LINK */
+.match-card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* CARD */
+.match-card {
+  background: white;
+
+  border-radius: 18px;
+
+  padding: 20px;
+
+  border: 1px solid #e2e8f0;
+
+  transition: 0.2s;
+}
+
+.match-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+/* HEADER */
+.match-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 18px;
+
+  font-size: 13px;
+
+  color: #64748b;
+}
+
+/* STATUS */
+.match-status {
+  font-weight: bold;
+}
+
+/* BODY */
+.match-card-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+}
+
+/* TEAM */
+.match-team {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  width: 35%;
+}
+
+.away-team {
+  justify-content: flex-end;
+}
+
+/* LOGO */
+.match-team-logo {
+  width: 46px;
+  height: 46px;
+
+  object-fit: contain;
+
+  border-radius: 50%;
+
+  background: #f8fafc;
+
+  padding: 5px;
+
+  border: 1px solid #e2e8f0;
+}
+
+/* TEAM NAME */
+.match-team span {
+  font-weight: 500;
+}
+
+/* SCORE */
+.match-score {
+  width: 30%;
+
+  text-align: center;
+}
+
+.match-score strong {
+  font-size: 28px;
+  color: #0f172a;
+}
+
+/* FOOTER */
+.match-card-footer {
+  margin-top: 18px;
+
+  display: flex;
+  justify-content: space-between;
+
+  font-size: 13px;
+
+  color: #64748b;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .match-team span {
+    display: none;
+  }
+
+  .match-score strong {
+    font-size: 20px;
+  }
+
+  .match-team-logo {
+    width: 38px;
+    height: 38px;
+  }
+
+  .match-card-footer {
+    flex-direction: column;
+    gap: 5px;
+
+    text-align: center;
+  }
+}

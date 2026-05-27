@@ -1,0 +1,55 @@
+/* ===================================== */
+/* SEASONS */
+/* ===================================== */
+
+.seasons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
+  gap: 20px;
+
+  margin: 30px 0;
+}
+
+/* CARD */
+.season-card {
+  background: white;
+
+  border-radius: 18px;
+
+  padding: 30px 20px;
+
+  text-align: center;
+
+  text-decoration: none;
+  color: inherit;
+
+  border: 1px solid #e2e8f0;
+
+  transition: 0.2s;
+}
+
+.season-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+/* ICON */
+.season-card-icon {
+  font-size: 42px;
+
+  margin-bottom: 15px;
+}
+
+/* TEXT */
+.season-card h3 {
+  font-size: 26px;
+
+  margin-bottom: 8px;
+}
+
+.season-card p {
+  color: #64748b;
+  font-size: 14px;
+}

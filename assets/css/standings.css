@@ -1,0 +1,115 @@
+/* ===================================== */
+/* STANDINGS */
+/* ===================================== */
+
+.standings-section {
+  margin: 30px 0;
+}
+
+/* HEADER */
+.standings-header {
+  margin-bottom: 15px;
+}
+
+.standings-header h3 {
+  font-size: 22px;
+}
+
+/* TABLE WRAPPER */
+.table-wrapper {
+  overflow-x: auto;
+
+  background: white;
+
+  border-radius: 18px;
+
+  border: 1px solid #e2e8f0;
+}
+
+/* TABLE */
+.standings-table {
+  width: 100%;
+
+  border-collapse: collapse;
+}
+
+/* HEAD */
+.standings-table thead {
+  background: #020617;
+
+  color: white;
+}
+
+.standings-table th {
+  padding: 14px;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* BODY */
+.standings-table td {
+  padding: 14px;
+
+  text-align: center;
+
+  border-bottom: 1px solid #e2e8f0;
+
+  font-size: 14px;
+}
+
+/* ROW HOVER */
+.standings-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+/* TEAM */
+.team-column {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  text-align: left;
+}
+
+/* LOGO */
+.team-table-logo {
+  width: 32px;
+  height: 32px;
+
+  object-fit: contain;
+
+  border-radius: 50%;
+
+  background: #f8fafc;
+
+  padding: 3px;
+
+  border: 1px solid #e2e8f0;
+}
+
+/* TOP POSITIONS */
+.standings-table tbody tr:nth-child(1) {
+  background: #dcfce7;
+}
+
+.standings-table tbody tr:nth-child(2),
+.standings-table tbody tr:nth-child(3),
+.standings-table tbody tr:nth-child(4) {
+  background: #f0fdf4;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .standings-table th,
+  .standings-table td {
+    padding: 10px;
+
+    font-size: 12px;
+  }
+
+  .team-column span {
+    max-width: 90px;
+  }
+}

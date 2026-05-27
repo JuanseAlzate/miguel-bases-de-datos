@@ -6,7 +6,14 @@ $db = new Database();
 $conn = $db->connect();
 
 /*
-    ID del partido
+    CSS
+*/
+$pageStyles = [
+    "match_detail.css"
+];
+
+/*
+    Match ID
 */
 $matchId = $_GET["id"] ?? null;
 
@@ -15,7 +22,7 @@ if (!$matchId) {
 }
 
 /*
-    PARTIDO
+    Partido
 */
 $sqlMatch = "
     SELECT 
@@ -27,178 +34,307 @@ $sqlMatch = "
         away.name AS away_team,
         away.logo_url AS away_logo,
 
-        s.name AS stadium,
-        c.name AS city
+        s.name AS stadium_name
 
     FROM matches m
-    INNER JOIN teams home ON m.home_team_id = home.id
-    INNER JOIN teams away ON m.away_team_id = away.id
-    INNER JOIN stadiums s ON m.stadium_id = s.id
-    INNER JOIN cities c ON s.city_id = c.id
+
+    INNER JOIN teams home
+        ON m.home_team_id = home.id
+
+    INNER JOIN teams away
+        ON m.away_team_id = away.id
+
+    INNER JOIN stadiums s
+        ON m.stadium_id = s.id
 
     WHERE m.id = :id
 ";
 
-$stmt = $conn->prepare($sqlMatch);
-$stmt->bindParam(":id", $matchId);
-$stmt->execute();
+$stmtMatch = $conn->prepare($sqlMatch);
 
-$match = $stmt->fetch();
+$stmtMatch->bindParam(":id", $matchId);
+
+$stmtMatch->execute();
+
+$match = $stmtMatch->fetch();
 
 if (!$match) {
     die("Partido no encontrado");
 }
 
 /*
-    EVENTOS
+    Variables navegación
+*/
+$year = $match["year"];
+$tournament = $match["tournament"];
+
+/*
+    Eventos
 */
 $sqlEvents = "
     SELECT 
         e.*,
+
         p.first_name,
         p.last_name,
         p.team_id
 
     FROM events e
-    INNER JOIN players p ON e.player_id = p.id
+
+    INNER JOIN players p
+        ON e.player_id = p.id
+
     WHERE e.match_id = :id
+
     ORDER BY e.minute ASC
 ";
 
 $stmtEvents = $conn->prepare($sqlEvents);
+
 $stmtEvents->bindParam(":id", $matchId);
+
 $stmtEvents->execute();
 
 $events = $stmtEvents->fetchAll();
 
-/* FUNCIONES */
+/*
+    Alineaciones
+*/
+$sqlLineups = "
+    SELECT 
+        lp.*,
 
-function getLogo($logo) {
-    return "../" . $logo;
+        p.first_name,
+        p.last_name,
+        p.team_id,
+        p.shirt_number,
+
+        l.team_id AS lineup_team_id,
+        l.formation
+
+    FROM lineup_players lp
+
+    INNER JOIN players p
+        ON lp.player_id = p.id
+
+    INNER JOIN lineups l
+        ON lp.lineup_id = l.id
+
+    WHERE l.match_id = :id
+
+    ORDER BY lp.is_starter DESC, p.last_name ASC
+";
+
+$stmtLineups = $conn->prepare($sqlLineups);
+
+$stmtLineups->bindParam(":id", $matchId);
+
+$stmtLineups->execute();
+
+$lineups = $stmtLineups->fetchAll();
+
+/*
+    Separar equipos
+*/
+$homeLineup = [];
+$awayLineup = [];
+
+foreach ($lineups as $player) {
+
+    if ($player["team_id"] == $match["home_team_id"]) {
+        $homeLineup[] = $player;
+    } else {
+        $awayLineup[] = $player;
+    }
+
 }
 
+/*
+    Función iconos
+*/
 function getEventIcon($type) {
+
     return match($type) {
+
         "GOAL" => "⚽",
         "YELLOW_CARD" => "🟨",
         "RED_CARD" => "🟥",
         "SUBSTITUTION" => "🔄",
+
         default => "•"
     };
+
 }
+
+/*
+    Header
+*/
+require_once "../includes/header.php";
+
+/*
+    Navegación temporada
+*/
+require_once "../includes/season_nav.php";
 
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Detalle del partido</title>
-
-    <link rel="stylesheet" href="../assets/css/styles.css">
-</head>
-<body>
-
-<header class="site-header">
-    <div class="container header-content">
-
-        <div class="brand">
-            <div class="brand-logo">⚽</div>
-            <div>
-                <h1>Liga BetPlay</h1>
-                <p>Detalle del partido</p>
-            </div>
-        </div>
-
-        <nav class="main-nav">
-            <a href="matches.php">← Volver</a>
-        </nav>
-
-    </div>
-</header>
-
 <main class="container">
 
-    <!-- HEADER PARTIDO -->
-    <section class="match-detail">
+    <!-- MATCH HERO -->
+    <section class="match-detail-hero">
 
-        <div class="teams">
+        <div class="match-detail-card">
 
-            <!-- LOCAL -->
-            <div class="team">
-                <img src="<?php echo getLogo($match['home_logo']); ?>" class="team-img">
-                <span><?php echo $match["home_team"]; ?></span>
+            <!-- TEAMS -->
+            <div class="match-detail-teams">
+
+                <!-- HOME -->
+                <div class="detail-team">
+
+                    <img
+                        src="../<?php echo $match["home_logo"]; ?>"
+                        alt="<?php echo $match["home_team"]; ?>"
+                        class="detail-team-logo"
+                    >
+
+                    <h3>
+                        <?php echo $match["home_team"]; ?>
+                    </h3>
+
+                </div>
+
+                <!-- SCORE -->
+                <div class="detail-score">
+
+                    <strong>
+                        <?php echo $match["home_score"]; ?>
+                        -
+                        <?php echo $match["away_score"]; ?>
+                    </strong>
+
+                    <span>
+                        <?php echo $match["status"]; ?>
+                    </span>
+
+                </div>
+
+                <!-- AWAY -->
+                <div class="detail-team">
+
+                    <img
+                        src="../<?php echo $match["away_logo"]; ?>"
+                        alt="<?php echo $match["away_team"]; ?>"
+                        class="detail-team-logo"
+                    >
+
+                    <h3>
+                        <?php echo $match["away_team"]; ?>
+                    </h3>
+
+                </div>
+
             </div>
 
-            <!-- SCORE -->
-            <div class="score">
-                <strong>
-                    <?php echo $match["home_score"]; ?> - <?php echo $match["away_score"]; ?>
-                </strong>
+            <!-- INFO -->
+            <div class="match-detail-info">
+
+                <span>
+                    <?php echo $match["stadium_name"]; ?>
+                </span>
+
+                <span>
+                    <?php echo date("d/m/Y H:i", strtotime($match["match_date"])); ?>
+                </span>
+
             </div>
 
-            <!-- VISITANTE -->
-            <div class="team">
-                <span><?php echo $match["away_team"]; ?></span>
-                <img src="<?php echo getLogo($match['away_logo']); ?>" class="team-img">
-            </div>
-
-        </div>
-
-        <div class="match-info">
-            <?php echo $match["stadium"]; ?> · <?php echo $match["city"]; ?><br>
-            <?php echo date("d/m/Y H:i", strtotime($match["match_date"])); ?>
         </div>
 
     </section>
 
-    <!-- EVENTOS -->
-    <section class="events">
+    <!-- TABS -->
+    <div class="match-tabs">
 
-        <h2>Eventos del partido</h2>
+        <a href="#events" class="match-tab active">
+            Eventos
+        </a>
+
+        <a href="#lineups" class="match-tab">
+            Alineaciones
+        </a>
+
+    </div>
+
+    <!-- EVENTS -->
+    <section class="events-section" id="events">
+
+        <div class="section-title">
+
+            <h2>
+                Eventos
+            </h2>
+
+            <p>
+                Resumen cronológico del partido
+            </p>
+
+        </div>
 
         <?php if (empty($events)): ?>
-            <p>No hubo eventos registrados.</p>
+
+            <div class="empty-events">
+                No hay eventos registrados.
+            </div>
+
         <?php else: ?>
 
             <div class="timeline">
 
                 <div class="timeline-line"></div>
 
-                <div class="events-list">
+                <?php foreach ($events as $event): ?>
 
-                    <?php foreach ($events as $event): ?>
+                    <?php
+                        $side =
+                            $event["team_id"] == $match["home_team_id"]
+                            ? "home"
+                            : "away";
+                    ?>
 
-<div class="event-item event-<?php echo $event["team_id"] == $match["home_team_id"] ? 'home' : 'away'; ?>">
+                    <div class="timeline-event <?php echo $side; ?>">
 
+                        <div class="timeline-content">
 
                             <div class="event-minute">
                                 <?php echo $event["minute"]; ?>'
                             </div>
 
-                            <div class="event-content">
+                            <div class="event-card">
 
-                                <div class="event-row">
+                                <div class="event-header">
+
                                     <span class="event-icon">
                                         <?php echo getEventIcon($event["type"]); ?>
                                     </span>
 
-                                    <span class="event-player">
-                                        <?php echo $event["first_name"] . " " . $event["last_name"]; ?>
-                                    </span>
+                                    <strong>
+                                        <?php echo $event["first_name"]; ?>
+                                        <?php echo $event["last_name"]; ?>
+                                    </strong>
+
                                 </div>
 
-                                <div class="event-description">
+                                <p>
                                     <?php echo $event["description"]; ?>
-                                </div>
+                                </p>
 
                             </div>
 
                         </div>
 
-                    <?php endforeach; ?>
+                    </div>
 
-                </div>
+                <?php endforeach; ?>
 
             </div>
 
@@ -206,7 +342,175 @@ function getEventIcon($type) {
 
     </section>
 
+    <!-- LINEUPS -->
+    <section class="lineups-section" id="lineups">
+
+        <div class="section-title">
+
+            <h2>
+                Alineaciones
+            </h2>
+
+            <p>
+                Jugadores utilizados en el partido
+            </p>
+
+        </div>
+
+        <div class="lineups-grid">
+
+            <!-- LOCAL -->
+            <div class="lineup-card">
+
+                <div class="lineup-header">
+
+                    <img
+                        src="../<?php echo $match["home_logo"]; ?>"
+                        class="lineup-team-logo"
+                    >
+
+                    <h3>
+                        <?php echo $match["home_team"]; ?>
+                    </h3>
+
+                </div>
+
+                <!-- TITULARES -->
+                <div class="lineup-group">
+
+                    <h4>Titulares</h4>
+
+                    <?php foreach ($homeLineup as $player): ?>
+
+                        <?php if ($player["is_starter"]): ?>
+
+                            <div class="lineup-player">
+
+                                <span>
+                                    <?php echo $player["shirt_number"]; ?>
+                                </span>
+
+                                <p>
+                                    <?php echo $player["first_name"]; ?>
+                                    <?php echo $player["last_name"]; ?>
+                                </p>
+
+                            </div>
+
+                        <?php endif; ?>
+
+                    <?php endforeach; ?>
+
+                </div>
+
+                <!-- SUPLENTES -->
+                <div class="lineup-group">
+
+                    <h4>Suplentes</h4>
+
+                    <?php foreach ($homeLineup as $player): ?>
+
+                        <?php if (!$player["is_starter"]): ?>
+
+                            <div class="lineup-player">
+
+                                <span>
+                                    <?php echo $player["shirt_number"]; ?>
+                                </span>
+
+                                <p>
+                                    <?php echo $player["first_name"]; ?>
+                                    <?php echo $player["last_name"]; ?>
+                                </p>
+
+                            </div>
+
+                        <?php endif; ?>
+
+                    <?php endforeach; ?>
+
+                </div>
+
+            </div>
+
+            <!-- VISITANTE -->
+            <div class="lineup-card">
+
+                <div class="lineup-header">
+
+                    <img
+                        src="../<?php echo $match["away_logo"]; ?>"
+                        class="lineup-team-logo"
+                    >
+
+                    <h3>
+                        <?php echo $match["away_team"]; ?>
+                    </h3>
+
+                </div>
+
+                <!-- TITULARES -->
+                <div class="lineup-group">
+
+                    <h4>Titulares</h4>
+
+                    <?php foreach ($awayLineup as $player): ?>
+
+                        <?php if ($player["is_starter"]): ?>
+
+                            <div class="lineup-player">
+
+                                <span>
+                                    <?php echo $player["shirt_number"]; ?>
+                                </span>
+
+                                <p>
+                                    <?php echo $player["first_name"]; ?>
+                                    <?php echo $player["last_name"]; ?>
+                                </p>
+
+                            </div>
+
+                        <?php endif; ?>
+
+                    <?php endforeach; ?>
+
+                </div>
+
+                <!-- SUPLENTES -->
+                <div class="lineup-group">
+
+                    <h4>Suplentes</h4>
+
+                    <?php foreach ($awayLineup as $player): ?>
+
+                        <?php if (!$player["is_starter"]): ?>
+
+                            <div class="lineup-player">
+
+                                <span>
+                                    <?php echo $player["shirt_number"]; ?>
+                                </span>
+
+                                <p>
+                                    <?php echo $player["first_name"]; ?>
+                                    <?php echo $player["last_name"]; ?>
+                                </p>
+
+                            </div>
+
+                        <?php endif; ?>
+
+                    <?php endforeach; ?>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
 </main>
 
-</body>
-</html>
+<?php require_once "../includes/footer.php"; ?>
